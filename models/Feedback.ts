@@ -1,21 +1,14 @@
 // models/Feedback.ts
-import mongoose, { Schema } from "mongoose";
+import mongoose from "mongoose";
 
-export interface IFeedback {
-  name: string;
-  phone: string;
-  email?: string;
-  bookName?: string;
-  message?: string;
-}
-
-const FeedbackSchema = new Schema<IFeedback>(
+const FeedbackSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     phone: { type: String, required: true },
     email: { type: String },
     bookName: { type: String },
-    message: { type: String }
+    message: { type: String },
+    read: { type: Boolean, default: false }
   },
   { timestamps: true }
 );

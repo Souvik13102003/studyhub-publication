@@ -15,6 +15,7 @@ export default function Home() {
     const [description, setDescription] = useState(
         "We have the biggest bestsellers to the hardest-to-find, out-of-print rarities brought to you."
     );
+    const [carousel, setCarousel] = useState<any[]>([]);
 
     useEffect(() => {
         fetch("/api/categories")
@@ -25,6 +26,14 @@ export default function Home() {
             .then((r) => r.json())
             .then(setBooks)
             .catch(() => setBooks([]));
+        fetch("/api/settings").then(r => r.json()).then(s => {
+            setTitle(s.homeTitle || "WELCOME TO STUDY-HUB PUBLICATION");
+            setDescription(s.homeDescription || "");
+        }).catch(() => { });
+
+        fetch("/api/carousel").then(r => r.json()).then(setCarousel).catch(() => { });
+        fetch("/api/categories").then(r => r.json()).then(setCategories).catch(() => { });
+        fetch("/api/books").then(r => r.json()).then(setBooks).catch(() => { });
     }, []);
 
     return (
@@ -35,6 +44,16 @@ export default function Home() {
 
             <Header />
             <main style={{ maxWidth: 1100, margin: "20px auto", padding: 12 }}>
+                <section style={{ marginTop: 18 }}>
+                    <div style={{ display: "flex", gap: 12, overflowX: "auto", paddingBottom: 12 }}>
+                        {carousel.map((c) => (
+                            <a key={c._id} href={c.link || "#"} style={{ minWidth: 520, display: "block" }}>
+                                <img src={c.imageUrl} alt={c.title} style={{ width: "100%", height: 260, objectFit: "cover", borderRadius: 6 }} />
+                            </a>
+                        ))}
+                    </div>
+                </section>
+
                 <section style={{ background: "#fff", padding: 18, borderRadius: 6 }}>
                     <h1>{title}</h1>
                     <p style={{ color: "#555" }}>{description}</p>

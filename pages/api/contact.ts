@@ -1,24 +1,33 @@
 // pages/api/contact.ts
 import type { NextApiRequest, NextApiResponse } from "next";
+import dbConnect from "@/lib/mongodb";
+import Feedback from "@/models/Feedback";
 
-type ContactPayload = {
-  name?: string;
-  phone?: string;
-  email?: string;
-  bookName?: string;
-  message?: string;
-};
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
+    const db = await dbConnect();
+    if (!db) return res.status(500).json({ error: "DB not configured" });
 
-  const data: ContactPayload = req.body || {};
-  if (!data.name || !data.phone) {
-    return res.status(400).json({ error: "Name and Phone are required" });
-  }
+    try {
+        const { name, phone, email, bookName, message } = req.body || {};
 
-  // For now just log to server console (later will save to DB and email)
-  console.log("Contact submission:", data);
+        // Basic validation
+        if (!name || !name.trim()) return res.status(400).json({ error: "Name is required" });
+        if (!phone || !phone.trim()) return res.status(400).json({ error: "Phone number is required" });
 
-  return res.status(201).json({ ok: true, message: "Feedback received" });
+        const doc = await Feedback.create({
+            name: name.trim(),
+            phone: phone.trim(),
+            email: email ? String(email).trim() : undefined,
+            bookName: bookName ? String(bookName).trim() : undefined,
+            message: message ? String(message).trim() : undefined,
+            read: false
+        });
+
+        return res.status(201).json({ ok: true, id: doc._id });
+    } catch (err) {
+        console.error("contact POST error:", err);
+        return res.status(500).json({ error: "Server error" });
+    }
 }

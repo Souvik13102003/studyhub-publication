@@ -14,3 +14,12 @@ export interface Category {
   name: string;
   thumbnail?: string;
 }
+
+export interface IFeedback {
+  name: string;
+  phone: string;
+  email?: string;
+  bookName?: string;
+  message?: string;
+  read?: boolean;
+}
