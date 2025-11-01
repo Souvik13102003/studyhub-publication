@@ -39,7 +39,7 @@ export default function AdminDashboard() {
             <p>Welcome — use the menu below to manage site content.</p>
 
             <nav style={{ display: "flex", gap: 12, marginTop: 18 }}>
-                <Link href="/admin/settings">Site Settings</Link>
+                <Link href="/admin/site-settings">Site Settings</Link>
                 <Link href="/admin/carousel">Carousel</Link>
                 <Link href="/admin/categories">Categories</Link>
                 <Link href="/admin/books">Books</Link>
