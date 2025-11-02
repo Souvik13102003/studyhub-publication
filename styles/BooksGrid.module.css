@@ -1,0 +1,50 @@
+/* styles/BooksGrid.module.css */
+
+/* Base grid: centers items */
+.grid {
+  display: grid;
+  gap: 18px;
+  justify-content: center; /* center the group when few items */
+  align-items: start;
+  padding: 6px 0;
+  /* default column width (desktop) */
+  grid-template-columns: repeat(auto-fill, 180px);
+}
+
+/* Desktop/Laptop (aim for ~5-6 cards depending on viewport) */
+@media (min-width: 1200px) {
+  .grid {
+    gap: 20px;
+    grid-template-columns: repeat(auto-fill, 200px); /* slightly wider cards on large screens */
+  }
+}
+
+/* Laptop / small desktop */
+@media (min-width: 1001px) and (max-width: 1199px) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, 190px);
+  }
+}
+
+/* Tablet: aim for 4 cards */
+@media (min-width: 601px) and (max-width: 1000px) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, 170px);
+    gap: 16px;
+  }
+}
+
+/* Mobile: aim for 3 cards */
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, 140px);
+    gap: 12px;
+  }
+}
+
+/* Make sure each grid item (card) doesn't expand beyond its column */
+.grid > * {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}

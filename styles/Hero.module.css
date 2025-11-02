@@ -1,0 +1,211 @@
+/* components/Hero.module.css */
+
+/* Outer spacing and background */
+.heroWrap {
+  background: #fafafa;
+  padding: 28px 16px;
+}
+
+/* Center container with max-width */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 12px;
+}
+
+/* Card look */
+.card {
+  background: linear-gradient(180deg, #ffffff 0%, #fcfcfc 100%);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(16, 24, 40, 0.08);
+  overflow: hidden;
+  display: flex;
+  align-items: stretch;
+  transition: transform 240ms ease, box-shadow 240ms ease;
+}
+
+/* Hover lift on large screens */
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(16, 24, 40, 0.12);
+}
+
+/* Accent bar on left/top */
+.accent {
+  width: 8px;
+  background: linear-gradient(180deg, #f6c84c 0%, #f2b01e 100%);
+  border-right: 1px solid rgba(0, 0, 0, 0.02);
+  flex-shrink: 0;
+}
+
+/* Content area */
+.content {
+  padding: 28px 28px;
+  flex: 1 1 auto;
+}
+
+/* Title styles - responsive */
+.title {
+  margin: 0 0 10px 0;
+  font-family: Inter, "Helvetica Neue", Arial, sans-serif;
+  color: #0f1724;
+  line-height: 1.02;
+  font-weight: 800;
+  font-size: 28px; /* base (mobile) */
+  letter-spacing: -0.02em;
+}
+
+/* Description text preserving newlines (white-space via inline style too) */
+.description {
+  margin: 10px 0 18px 0;
+  color: #475569;
+  font-size: 15px;
+  line-height: 1.7;
+  max-width: 84ch;
+}
+
+/* CTA row */
+.ctaRow {
+  margin-top: 18px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Primary button */
+.primaryBtn {
+  display: inline-block;
+  background: linear-gradient(90deg, #f6c84c, #f2b01e);
+  color: #0f1724;
+  font-weight: 700;
+  padding: 10px 18px;
+  border-radius: 999px;
+  text-decoration: none;
+  box-shadow: 0 6px 18px rgba(242, 176, 30, 0.18);
+  transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
+  font-size: 15px;
+}
+
+/* Primary hover/focus */
+.primaryBtn:hover,
+.primaryBtn:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(242, 176, 30, 0.22);
+  opacity: 0.98;
+}
+
+/* Secondary link-style button */
+.linkBtn {
+  color: #475569;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 6px;
+  border-radius: 8px;
+  transition: color 160ms ease, transform 160ms ease;
+}
+
+.linkBtn:hover,
+.linkBtn:focus {
+  color: #0f1724;
+  transform: translateY(-1px);
+}
+
+/* Small meta text below */
+.smallMeta {
+  margin-top: 14px;
+  color: #9aa4b2;
+  font-size: 12px;
+}
+
+/* ===== Responsive rules ===== */
+
+/* Tablet and above */
+@media (min-width: 640px) {
+  .heroWrap {
+    padding: 36px 20px;
+  }
+
+  .content {
+    padding: 36px 36px;
+  }
+
+  .title {
+    font-size: 36px;
+  }
+
+  .description {
+    font-size: 16px;
+  }
+}
+
+/* Laptop and larger */
+@media (min-width: 992px) {
+  .heroWrap {
+    padding: 44px 24px;
+  }
+
+  .content {
+    padding: 48px 48px;
+  }
+
+  .title {
+    font-size: 44px;
+  }
+
+  .description {
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  .accent {
+    width: 12px;
+  }
+
+  .primaryBtn {
+    padding: 12px 22px;
+    font-size: 16px;
+  }
+}
+
+/* Ultra wide screens */
+@media (min-width: 1400px) {
+  .content {
+    padding: 56px 64px;
+  }
+
+  .title {
+    font-size: 48px;
+  }
+
+  .description {
+    font-size: 18px;
+  }
+}
+
+/* If viewport becomes very narrow, make everything comfortable */
+@media (max-width: 420px) {
+  .card {
+    flex-direction: column;
+  }
+
+  .accent {
+    height: 6px;
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+  }
+
+  .content {
+    padding: 20px;
+  }
+
+  .title {
+    font-size: 22px;
+  }
+
+  .description {
+    font-size: 14px;
+  }
+}
