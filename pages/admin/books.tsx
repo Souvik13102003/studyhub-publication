@@ -1,5 +1,6 @@
 // pages/admin/books.tsx
 import { useEffect, useState } from "react";
+import { useRef } from "react";
 import { useRouter } from "next/router";
 import { uploadImageFile } from "@/lib/uploadImage";
 
@@ -31,6 +32,8 @@ export default function AdminBooks() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [uploadingFront, setUploadingFront] = useState(false);
   const [uploadingBack, setUploadingBack] = useState(false);
+  const frontInputRef = useRef<HTMLInputElement | null>(null);
+  const backInputRef = useRef<HTMLInputElement | null>(null);
 
   const router = useRouter();
 
@@ -121,6 +124,9 @@ export default function AdminBooks() {
       backCover: "",
       description: "",
     });
+
+    if (frontInputRef.current) frontInputRef.current.value = "";
+    if (backInputRef.current) backInputRef.current.value = "";
   }
 
   function editBook(b: Book) {
@@ -259,6 +265,7 @@ export default function AdminBooks() {
               type="file"
               accept="image/*"
               onChange={handleFrontFileChange}
+              ref={frontInputRef}
             />
             <div
               style={{
@@ -292,6 +299,7 @@ export default function AdminBooks() {
               type="file"
               accept="image/*"
               onChange={handleBackFileChange}
+              ref={backInputRef}
             />
             <div
               style={{
