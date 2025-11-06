@@ -11,8 +11,7 @@ import "swiper/css/pagination";
 type CarouselItem = {
   _id?: string;
   title?: string;
-  imageUrl?: string;
-  link?: string;
+  imageUrl: string; // required
 };
 
 interface CarouselProps {
@@ -36,7 +35,7 @@ const Carousel: React.FC<CarouselProps> = ({
           style={{
             width: "100%",
             maxWidth: `${maxWidth}px`,
-            aspectRatio: "3 / 1", // keep as-is; change to "16 / 9" if you want classic widescreen
+            aspectRatio: "3 / 1", // or "16 / 9" for widescreen
             position: "relative",
             overflow: "hidden",
             borderRadius: 8,
@@ -59,21 +58,13 @@ const Carousel: React.FC<CarouselProps> = ({
             style={{ width: "100%", height: "100%" }}
           >
             {items.map((item) => (
-              <SwiperSlide key={item._id || item.title || Math.random()}>
-                <a
-                  href={item.link || "#"}
+              <SwiperSlide key={item._id || Math.random()}>
+                <div
                   style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    display: "block",
+                    position: "relative",
                     width: "100%",
                     height: "100%",
-                    textDecoration: "none",
                   }}
-                  aria-label={item.title || "carousel item"}
                 >
                   <img
                     src={item.imageUrl}
@@ -82,19 +73,40 @@ const Carousel: React.FC<CarouselProps> = ({
                     style={{
                       width: "100%",
                       height: "100%",
-                      objectFit: "cover",
+                      objectFit: "contain",
+                      backgroundColor: "#000", // optional: adds black bars for smaller images
                       objectPosition: "center",
                       display: "block",
                     }}
                   />
-                </a>
+
+                  {/* === Title Overlay === */}
+                  {item.title && (
+                    <div
+                      style={{
+                        position: "absolute",
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        padding: "12px 18px",
+                        background:
+                          "linear-gradient(transparent, rgba(0,0,0,0.65))",
+                        color: "#fff",
+                        fontSize: "1.2rem",
+                        fontWeight: 600,
+                        textShadow: "0 2px 4px rgba(0,0,0,0.4)",
+                      }}
+                    >
+                      {item.title}
+                    </div>
+                  )}
+                </div>
               </SwiperSlide>
             ))}
           </Swiper>
 
-          {/* Navigation Styling */}
+          {/* === Swiper UI Styling === */}
           <style jsx global>{`
-            /* === Navigation Arrows === */
             .swiper-button-next,
             .swiper-button-prev {
               color: #333;
@@ -114,7 +126,6 @@ const Carousel: React.FC<CarouselProps> = ({
               font-weight: bold;
             }
 
-            /* Move arrows OUTSIDE the carousel */
             .swiper-button-prev {
               left: -52px;
             }
@@ -122,15 +133,13 @@ const Carousel: React.FC<CarouselProps> = ({
               right: -52px;
             }
 
-            /* Hover effect for desktop */
             .swiper-button-next:hover,
             .swiper-button-prev:hover {
-              background: #ffd24c; /* Study-Hub yellow accent */
+              background: #ffd24c;
               color: #000;
               box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
             }
 
-            /* Hide navigation arrows on mobile */
             @media (max-width: 768px) {
               .swiper-button-next,
               .swiper-button-prev {
@@ -138,13 +147,12 @@ const Carousel: React.FC<CarouselProps> = ({
               }
             }
 
-            /* === Pagination Dots === */
             .swiper-pagination-bullet {
               background: #ccc;
               opacity: 0.8;
             }
             .swiper-pagination-bullet-active {
-              background: #ffd24c; /* Match your theme */
+              background: #ffd24c;
               opacity: 1;
             }
           `}</style>
